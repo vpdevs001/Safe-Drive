@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
@@ -8,11 +8,99 @@ import { EventCard } from "../../components/EventCard";
 import { SectionHeader } from "../../components/SectionHeader";
 import { StatCard } from "../../components/StatCard";
 import { theme } from "../../constants/theme";
+import { useDriveSession } from "../../hooks/useDriveSession";
+import { RuntimeDriveEvent } from "../../sensors/useSensorSession";
+import { EventType, RatingType } from "../../types/session";
 
 type DriveState = "pre" | "active" | "summary";
 
+const eventCardMap: Record<
+  EventType,
+  { cardType: "brake" | "acceleration" | "turn" | "phone"; title: string }
+> = {
+  harsh_brake: { cardType: "brake", title: "Harsh brake" },
+  harsh_accel: { cardType: "acceleration", title: "Hard accel." },
+  sharp_turn: { cardType: "turn", title: "Sharp turn" },
+  aggressive_steer: { cardType: "turn", title: "Aggressive steering" },
+  excessive_movement: { cardType: "acceleration", title: "Excessive movement" },
+  phone_handling: { cardType: "phone", title: "Phone handling" },
+};
+
+const ratingTitles: Record<RatingType, string> = {
+  excellent: "Excellent driver",
+  good: "Good driver",
+  fair: "Fair driver",
+  needs_work: "Needs work",
+  poor: "Needs improvement",
+};
+
+const formatDuration = (durationMs: number) => {
+  const totalSeconds = Math.floor(durationMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
+
 export default function DriveScreen() {
-  const [driveState, setDriveState] = useState<DriveState>("active");
+  const [driveState, setDriveState] = useState<DriveState>("pre");
+  const {
+    isReady,
+    isRunning,
+    events,
+    score,
+    sessionDurationMs,
+    start,
+    stop,
+    rating,
+    error,
+  } = useDriveSession();
+
+  const eventSummary = useMemo<
+    Array<{ type: EventType; count: number; deduction: number }>
+  >(() => {
+    const summary: Record<
+      EventType,
+      { type: EventType; count: number; deduction: number }
+    > = {} as Record<
+      EventType,
+      { type: EventType; count: number; deduction: number }
+    >;
+
+    for (const event of events as RuntimeDriveEvent[]) {
+      const existing = summary[event.type] ?? {
+        type: event.type,
+        count: 0,
+        deduction: 0,
+      };
+
+      existing.count += 1;
+      existing.deduction += event.deduction;
+      summary[event.type] = existing;
+    }
+
+    return Object.values(summary).sort((a, b) => b.deduction - a.deduction);
+  }, [events]);
+
+  const recentEvents = events as RuntimeDriveEvent[];
+  const statusText = isReady
+    ? "Sensors ready"
+    : "Waiting for permissions or sensor access.";
+  const ratingText = ratingTitles[rating];
+
+  const handleStart = async () => {
+    const started = await start();
+    if (started) {
+      setDriveState("active");
+    }
+  };
+
+  const handleStop = async () => {
+    await stop();
+    setDriveState("summary");
+  };
+
+  const handleDone = () => setDriveState("pre");
 
   const renderPreDrive = () => (
     <View style={styles.stateContainer}>
@@ -25,13 +113,16 @@ export default function DriveScreen() {
           Drive safely, maintain speed limits, and avoid sudden braking to score
           100.
         </Text>
+        <Text style={styles.statusText}>{statusText}</Text>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
 
       <Button
         title="Start Drive"
-        onPress={() => setDriveState("active")}
+        onPress={handleStart}
         variant="success"
         icon={<Ionicons name="play" size={20} color={theme.colors.success} />}
+        disabled={!isReady}
         style={styles.actionBtn}
       />
     </View>
@@ -50,7 +141,7 @@ export default function DriveScreen() {
       {/* Progress ring */}
       <View style={styles.chartWrapper}>
         <CircularProgress
-          score={76}
+          score={score}
           size={160}
           strokeWidth={12}
           labelText="Live score"
@@ -59,10 +150,14 @@ export default function DriveScreen() {
 
       {/* Grid stats */}
       <View style={styles.statsGrid}>
-        <StatCard value="12:34" label="Duration" />
-        <StatCard value={7} label="Events" valueColor={theme.colors.danger} />
+        <StatCard value={formatDuration(sessionDurationMs)} label="Duration" />
         <StatCard
-          value="-24"
+          value={events.length}
+          label="Events"
+          valueColor={theme.colors.danger}
+        />
+        <StatCard
+          value={`-${100 - score}`}
           label="Deducted"
           valueColor={theme.colors.warning}
         />
@@ -71,22 +166,28 @@ export default function DriveScreen() {
       {/* Event log */}
       <View style={styles.section}>
         <SectionHeader title="Live events" />
-        <EventCard
-          type="brake"
-          title="Harsh brake"
-          subtitle="2 events · -10 pts"
-        />
-        <EventCard
-          type="acceleration"
-          title="Hard accel."
-          subtitle="2 events · -10 pts"
-        />
-        <EventCard type="turn" title="Sharp turn" subtitle="1 event · -3 pts" />
+        {recentEvents.length === 0 ? (
+          <Text style={styles.emptyText}>No events detected yet.</Text>
+        ) : (
+          recentEvents.map((event) => {
+            const eventInfo = eventCardMap[event.type];
+            return (
+              <EventCard
+                key={event.id}
+                type={eventInfo.cardType}
+                title={eventInfo.title}
+                subtitle={`-${event.deduction} pts · ${formatDuration(
+                  event.occurrenceTime,
+                )}`}
+              />
+            );
+          })
+        )}
       </View>
 
       <Button
         title="End drive"
-        onPress={() => setDriveState("summary")}
+        onPress={handleStop}
         variant="danger"
         icon={<Ionicons name="stop" size={18} color={theme.colors.danger} />}
         style={styles.actionBtn}
@@ -99,47 +200,53 @@ export default function DriveScreen() {
       {/* Progress Ring */}
       <View style={styles.chartWrapper}>
         <CircularProgress
-          score={85}
+          score={score}
           size={160}
           strokeWidth={12}
           labelText="Final score"
-          ratingText="Good driver"
+          ratingText={ratingText}
         />
       </View>
 
       {/* Stats Grid */}
       <View style={styles.statsGrid}>
-        <StatCard value="24:10" label="Duration" />
-        <StatCard value={3} label="Events" valueColor={theme.colors.warning} />
+        <StatCard value={formatDuration(sessionDurationMs)} label="Duration" />
         <StatCard
-          value="-15"
+          value={events.length}
+          label="Events"
+          valueColor={theme.colors.warning}
+        />
+        <StatCard
+          value={`-${100 - score}`}
           label="Deducted"
           valueColor={theme.colors.danger}
         />
       </View>
 
-      {/* Breakdown and AI Feedback */}
       <View style={styles.section}>
         <SectionHeader title="Event breakdown" />
-        <EventCard
-          type="brake"
-          title="Harsh brake"
-          subtitle="1 event"
-          countText="×1"
-          deductText="-5 pts"
-        />
-        <EventCard
-          type="phone"
-          title="Phone handling"
-          subtitle="1 event"
-          countText="×1"
-          deductText="-10 pts"
-        />
+        {eventSummary.length === 0 ? (
+          <Text style={styles.emptyText}>No events recorded this drive.</Text>
+        ) : (
+          eventSummary.map((summary) => {
+            const eventInfo = eventCardMap[summary.type];
+            return (
+              <EventCard
+                key={summary.type}
+                type={eventInfo.cardType}
+                title={eventInfo.title}
+                subtitle={`${summary.count} events`}
+                countText={`×${summary.count}`}
+                deductText={`-${summary.deduction} pts`}
+              />
+            );
+          })
+        )}
       </View>
 
       <Button
         title="Done"
-        onPress={() => setDriveState("pre")}
+        onPress={handleDone}
         variant="outline"
         style={styles.actionBtn}
       />
@@ -148,7 +255,6 @@ export default function DriveScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Top Demo State Switcher */}
       <View style={styles.switcherContainer}>
         {(["pre", "active", "summary"] as DriveState[]).map((state) => {
           const isSelected = driveState === state;
@@ -180,7 +286,6 @@ export default function DriveScreen() {
         })}
       </View>
 
-      {/* Main Nav Header */}
       <View style={styles.navHeader}>
         <Pressable
           style={({ pressed }) => [styles.navIcon, pressed && { opacity: 0.7 }]}
@@ -314,6 +419,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 20,
   },
+  statusText: {
+    marginTop: theme.spacing.sm,
+    color: theme.colors.textSecondary,
+    fontSize: 13,
+    textAlign: "center",
+  },
+  errorText: {
+    marginTop: theme.spacing.xs,
+    color: theme.colors.danger,
+    fontSize: 13,
+    textAlign: "center",
+  },
   liveIndicatorContainer: {
     alignItems: "center",
   },
@@ -349,6 +466,12 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: 8,
+  },
+  emptyText: {
+    color: theme.colors.textSecondary,
+    fontSize: 14,
+    textAlign: "center",
+    marginTop: theme.spacing.sm,
   },
   actionBtn: {
     marginTop: theme.spacing.sm,

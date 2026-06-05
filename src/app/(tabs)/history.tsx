@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HistoryItem } from "../../components/HistoryItem";
@@ -7,52 +7,78 @@ import { SectionHeader } from "../../components/SectionHeader";
 import { StatCard } from "../../components/StatCard";
 import { TrendChart } from "../../components/TrendChart";
 import { theme } from "../../constants/theme";
+import { useSessionHistory } from "../../hooks/useSessionHistory";
+
+const ratingLabelMap: Record<string, string> = {
+  excellent: "Excellent",
+  good: "Good",
+  fair: "Fair",
+  needs_work: "Needs work",
+  poor: "Poor",
+  pending: "Pending",
+};
+
+const formatDuration = (durationMs: number) => {
+  const totalSeconds = Math.floor(durationMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
+
+const formatSessionMeta = (durationMs?: number, eventCount?: number) => {
+  const duration = durationMs ? formatDuration(durationMs) : "No duration";
+  return `${duration} · ${eventCount ?? 0} events`;
+};
+
+const createTrendData = (
+  sessions: Array<{ startedAt: number; score: number }>,
+) => {
+  const today = new Date();
+  const dayNames = ["S", "M", "T", "W", "T", "F", "S"];
+
+  return Array.from({ length: 7 }).map((_, index) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (6 - index));
+    const key = date.toDateString();
+    const scores = sessions
+      .filter((session) => new Date(session.startedAt).toDateString() === key)
+      .map((session) => session.score);
+
+    const averageScore =
+      scores.length > 0
+        ? Math.round(
+            scores.reduce((sum, value) => sum + value, 0) / scores.length,
+          )
+        : 0;
+
+    return {
+      day: dayNames[date.getDay()],
+      score: averageScore,
+      isActive: key === today.toDateString(),
+    };
+  });
+};
 
 export default function HistoryScreen() {
+  const { sessions, loading } = useSessionHistory();
   const [selectedFilter, setSelectedFilter] = useState("All");
 
-  const trendData = [
-    { day: "M", score: 60 },
-    { day: "T", score: 75 },
-    { day: "W", score: 55 },
-    { day: "T", score: 82 },
-    { day: "F", score: 70 },
-    { day: "S", score: 88 },
-    { day: "S", score: 92, isActive: true },
-  ];
+  const totalDrives = sessions.length;
+  const averageScore = totalDrives
+    ? Math.round(
+        sessions.reduce((sum, session) => sum + session.score, 0) / totalDrives,
+      )
+    : 0;
+  const totalEvents = sessions.reduce(
+    (sum, session) => sum + session.eventCount,
+    0,
+  );
 
+  const trendData = useMemo(() => createTrendData(sessions), [sessions]);
   const filterChips = ["All", "This week", "Best", "Worst"];
-
-  const historyDrives = [
-    {
-      score: 92,
-      title: "Morning commute",
-      meta: "Today · 18 min · 8.2 km",
-      badgeText: "Excellent",
-    },
-    {
-      score: 74,
-      title: "Evening drive",
-      meta: "Yesterday · 32 min",
-      badgeText: "Fair",
-    },
-    {
-      score: 85,
-      title: "Weekend trip",
-      meta: "Sat · 1h 12 min",
-      badgeText: "Good",
-    },
-    {
-      score: 61,
-      title: "Night drive",
-      meta: "Fri · 24 min",
-      badgeText: "Needs work",
-    },
-  ];
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Navigation Header */}
       <View style={styles.navHeader}>
         <Text style={styles.navTitle}>Drive history</Text>
         <Pressable
@@ -67,25 +93,22 @@ export default function HistoryScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Trend Chart */}
         <TrendChart data={trendData} />
 
-        {/* Summary grid */}
         <View style={styles.summaryRow}>
           <StatCard
-            value="87"
+            value={averageScore || "—"}
             label="Avg score"
             valueColor={theme.colors.success}
           />
-          <StatCard value="7" label="Drives" />
+          <StatCard value={totalDrives || "—"} label="Drives" />
           <StatCard
-            value="12"
+            value={totalEvents || "—"}
             label="Events"
             valueColor={theme.colors.danger}
           />
         </View>
 
-        {/* Filter chips */}
         <View style={styles.filterContainer}>
           <ScrollView
             horizontal
@@ -118,19 +141,37 @@ export default function HistoryScreen() {
           </ScrollView>
         </View>
 
-        {/* History list */}
-        <View style={styles.listSection}>
-          <SectionHeader title="Recent drives" />
-          {historyDrives.map((drive, index) => (
-            <HistoryItem
-              key={index}
-              score={drive.score}
-              title={drive.title}
-              meta={drive.meta}
-              badgeText={drive.badgeText}
-            />
-          ))}
-        </View>
+        <SectionHeader title="Recent drives" />
+
+        {loading ? (
+          <Text style={styles.emptyText}>Loading drive history…</Text>
+        ) : sessions.length === 0 ? (
+          <Text style={styles.emptyText}>No drives recorded yet.</Text>
+        ) : (
+          <View style={styles.listSection}>
+            {sessions.map((session) => {
+              const title = session.name
+                ? session.name
+                : new Date(session.startedAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  });
+
+              return (
+                <HistoryItem
+                  key={session.id}
+                  score={session.score}
+                  title={title}
+                  meta={formatSessionMeta(
+                    session.durationMs,
+                    session.eventCount,
+                  )}
+                  badgeText={ratingLabelMap[session.rating ?? "pending"]}
+                />
+              );
+            })}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -199,6 +240,12 @@ const styles = StyleSheet.create({
   filterChipTextSelected: {
     color: theme.colors.primary,
     fontWeight: "600",
+  },
+  emptyText: {
+    color: theme.colors.textSecondary,
+    fontSize: 14,
+    textAlign: "center",
+    marginTop: theme.spacing.lg,
   },
   listSection: {
     paddingHorizontal: 16,
