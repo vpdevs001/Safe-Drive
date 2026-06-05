@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
   },
   borderBottom: {
     borderBottomWidth: 0.5,

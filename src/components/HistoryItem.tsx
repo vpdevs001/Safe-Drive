@@ -54,16 +54,7 @@ export const HistoryItem: React.FC<HistoryItemProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: theme.colors.card,
-    borderRadius: theme.roundness.md,
-    borderWidth: 0.5,
-    borderColor: theme.colors.border,
-    paddingVertical: 9,
-    paddingHorizontal: 10,
-    marginBottom: 6,
-    gap: 8,
+
   },
   scoreRing: {
     width: 36,

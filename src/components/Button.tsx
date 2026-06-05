@@ -118,15 +118,15 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
     borderRadius: theme.roundness.md,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
   text: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "600",
   },
   disabled: {
