@@ -28,17 +28,26 @@ export const createSession = async (
     ...overrides,
   };
 
+  const columns = ["id", "started_at", "score", "event_count", "created_at"];
+  const placeholders = ["?", "?", "?", "?", "?"];
+  const values: Array<string | number> = [
+    session.id,
+    session.startedAt,
+    session.score,
+    session.eventCount,
+    session.createdAt,
+  ];
+
+  if (session.name) {
+    columns.push("name");
+    placeholders.push("?");
+    values.push(session.name);
+  }
+
   try {
     await db.runAsync(
-      `INSERT INTO sessions (id, started_at, score, event_count, created_at)
-       VALUES (?, ?, ?, ?, ?)`,
-      [
-        session.id,
-        session.startedAt,
-        session.score,
-        session.eventCount,
-        session.createdAt,
-      ],
+      `INSERT INTO sessions (${columns.join(", ")}) VALUES (${placeholders.join(", ")})`,
+      values,
     );
     return session;
   } catch (error) {

@@ -8,6 +8,7 @@ import { EventCard } from "../../components/EventCard";
 import { SectionHeader } from "../../components/SectionHeader";
 import { StatCard } from "../../components/StatCard";
 import { theme } from "../../constants/theme";
+import { SensitivityLevel } from "../../detection/thresholds";
 import { useDriveSession } from "../../hooks/useDriveSession";
 import { RuntimeDriveEvent } from "../../sensors/useSensorSession";
 import { EventType, RatingType } from "../../types/session";
@@ -53,6 +54,8 @@ export default function DriveScreen() {
     start,
     stop,
     rating,
+    sensitivity,
+    setSensitivity,
     error,
   } = useDriveSession();
 
@@ -115,6 +118,40 @@ export default function DriveScreen() {
         </Text>
         <Text style={styles.statusText}>{statusText}</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+        <View style={styles.sensitivitySection}>
+          <Text style={styles.sensitivityLabel}>Sensor sensitivity</Text>
+          <View style={styles.sensitivityOptionRow}>
+            {(["low", "medium", "high"] as SensitivityLevel[]).map((option) => (
+              <Pressable
+                key={option}
+                onPress={() => setSensitivity(option)}
+                style={({ pressed }) => [
+                  styles.sensitivityOption,
+                  sensitivity === option && styles.sensitivityOptionSelected,
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.sensitivityOptionText,
+                    sensitivity === option &&
+                      styles.sensitivityOptionTextSelected,
+                  ]}
+                >
+                  {option === "low"
+                    ? "Low"
+                    : option === "medium"
+                      ? "Medium"
+                      : "High"}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+          <Text style={styles.sensitivityHint}>
+            Tap to choose how strongly the app detects events.
+          </Text>
+        </View>
       </View>
 
       <Button
@@ -455,6 +492,46 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.colors.success,
     fontWeight: "600",
+  },
+  sensitivitySection: {
+    marginTop: 20,
+    width: "100%",
+  },
+  sensitivityLabel: {
+    fontSize: 13,
+    color: theme.colors.textSecondary,
+    marginBottom: 10,
+  },
+  sensitivityOptionRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  sensitivityOption: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.roundness.md,
+    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: theme.colors.card,
+  },
+  sensitivityOptionSelected: {
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.primaryLight,
+  },
+  sensitivityOptionText: {
+    fontSize: 13,
+    color: theme.colors.text,
+    fontWeight: "500",
+  },
+  sensitivityOptionTextSelected: {
+    color: theme.colors.primary,
+  },
+  sensitivityHint: {
+    fontSize: 12,
+    color: theme.colors.textSecondary,
+    marginTop: 10,
   },
   chartWrapper: {
     alignItems: "center",
