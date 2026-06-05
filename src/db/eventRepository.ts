@@ -3,9 +3,11 @@
  * Handles all CRUD operations for drive events
  */
 
-import { v4 as uuidv4 } from "uuid";
 import { DriveEvent, EventType } from "../types/session";
 import { getDatabase } from "./database";
+
+const generateId = (): string =>
+  `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
 /**
  * Create a new event
@@ -14,7 +16,7 @@ export const createEvent = async (
   overrides?: Partial<DriveEvent>,
 ): Promise<DriveEvent> => {
   const db = await getDatabase();
-  const id = uuidv4();
+  const id = generateId();
   const now = Date.now();
 
   if (!overrides?.sessionId) {
@@ -77,7 +79,7 @@ export const createEventsBatch = async (
       }
 
       const event: DriveEvent = {
-        id: uuidv4(),
+        id: generateId(),
         sessionId: eventOverride.sessionId,
         type: eventOverride.type,
         occurredAt: eventOverride.occurredAt ?? now,

@@ -3,9 +3,11 @@
  * Handles all CRUD operations for drive sessions
  */
 
-import { v4 as uuidv4 } from "uuid";
 import { DriveSession, RatingType } from "../types/session";
 import { getDatabase } from "./database";
+
+const generateId = (): string =>
+  `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
 /**
  * Create a new drive session
@@ -14,7 +16,7 @@ export const createSession = async (
   overrides?: Partial<DriveSession>,
 ): Promise<DriveSession> => {
   const db = await getDatabase();
-  const id = uuidv4();
+  const id = generateId();
   const now = Date.now();
 
   const session: DriveSession = {
