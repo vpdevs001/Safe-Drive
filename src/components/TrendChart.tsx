@@ -52,29 +52,30 @@ export const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 12,
-    marginBottom: 12,
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
   chartTitle: {
-    fontSize: 10,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginBottom: 6,
+    marginBottom: 10,
     textTransform: "uppercase",
-    letterSpacing: 0.5,
+    letterSpacing: 0.8,
+    fontWeight: "600",
   },
   barsContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
-    height: 60,
+    height: 80,
     justifyContent: "space-between",
   },
   barColumn: {
     flex: 1,
     alignItems: "center",
-    marginHorizontal: 2,
+    marginHorizontal: 3,
   },
   barBg: {
-    height: 40,
+    height: 56,
     width: "100%",
     backgroundColor: "transparent",
     justifyContent: "flex-end",
@@ -83,12 +84,13 @@ const styles = StyleSheet.create({
   },
   barFill: {
     width: "100%",
-    borderRadius: 3,
+    borderRadius: 4,
   },
   dayLabel: {
-    fontSize: 9,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginTop: 4,
+    marginTop: 6,
     textAlign: "center",
+    fontWeight: "500",
   },
 });

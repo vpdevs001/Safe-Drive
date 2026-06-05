@@ -31,7 +31,7 @@ export const SettingRow: React.FC<SettingRowProps> = ({
   const renderContent = () => (
     <>
       <View style={[styles.iconContainer, { backgroundColor: iconBg }]}>
-        <Ionicons name={iconName} size={13} color={iconColor} />
+        <Ionicons name={iconName} size={18} color={iconColor} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.label}>{label}</Text>
@@ -53,7 +53,7 @@ export const SettingRow: React.FC<SettingRowProps> = ({
         onPress && (
           <Ionicons
             name="chevron-forward"
-            size={12}
+            size={18}
             color={theme.colors.textSecondary}
             style={styles.chevron}
           />
@@ -88,43 +88,43 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
   },
   borderBottom: {
     borderBottomWidth: 0.5,
-    borderBottomColor: "#1c1f29",
+    borderBottomColor: theme.colors.border,
   },
   iconContainer: {
-    width: 26,
-    height: 26,
+    width: 34,
+    height: 34,
     borderRadius: theme.roundness.sm,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: 14,
   },
   textContainer: {
     flex: 1,
     justifyContent: "center",
   },
   label: {
-    fontSize: 12,
+    fontSize: 15,
     color: theme.colors.text,
-    fontWeight: "400",
+    fontWeight: "500",
   },
   valueText: {
-    fontSize: 10,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginTop: 1,
+    marginTop: 2,
   },
   chevron: {
     marginLeft: "auto",
   },
   toggleContainer: {
-    width: 28,
-    height: 16,
-    borderRadius: 8,
-    padding: 2,
+    width: 44,
+    height: 26,
+    borderRadius: 13,
+    padding: 3,
     justifyContent: "center",
     marginLeft: "auto",
   },
@@ -137,9 +137,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   toggleKnob: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     backgroundColor: theme.colors.text,
   },
 });

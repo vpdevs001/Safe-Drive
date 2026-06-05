@@ -54,19 +54,28 @@ export const HistoryItem: React.FC<HistoryItemProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: theme.colors.card,
+    borderRadius: theme.roundness.lg,
+    borderWidth: 0.5,
+    borderColor: theme.colors.border,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+    gap: 14,
   },
   scoreRing: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 2,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2.5,
     alignItems: "center",
     justifyContent: "center",
   },
   scoreNumber: {
-    fontSize: 11,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "700",
     color: theme.colors.text,
   },
   info: {
@@ -74,22 +83,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 11,
-    fontWeight: "500",
+    fontSize: 15,
+    fontWeight: "600",
     color: theme.colors.text,
   },
   meta: {
-    fontSize: 10,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginTop: 2,
+    marginTop: 3,
   },
   badge: {
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-    borderRadius: theme.roundness.md,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: theme.roundness.xxl,
   },
   badgeText: {
-    fontSize: 9,
+    fontSize: 12,
     fontWeight: "600",
   },
 });

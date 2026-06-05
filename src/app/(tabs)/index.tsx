@@ -23,7 +23,7 @@ export default function DriveScreen() {
     <View style={styles.stateContainer}>
       <View style={styles.welcomeCard}>
         <View style={styles.welcomeIconWrapper}>
-          <Ionicons name="car-outline" size={48} color={theme.colors.primary} />
+          <Ionicons name="car-outline" size={56} color={theme.colors.primary} />
         </View>
         <Text style={styles.welcomeTitle}>Ready to start your trip?</Text>
         <Text style={styles.welcomeSubtitle}>
@@ -35,7 +35,7 @@ export default function DriveScreen() {
         title="Start Drive"
         onPress={() => setDriveState("active")}
         variant="success"
-        icon={<Ionicons name="play" size={16} color={theme.colors.success} />}
+        icon={<Ionicons name="play" size={20} color={theme.colors.success} />}
         style={styles.actionBtn}
       />
     </View>
@@ -55,8 +55,8 @@ export default function DriveScreen() {
       <View style={styles.chartWrapper}>
         <CircularProgress
           score={76}
-          size={130}
-          strokeWidth={10}
+          size={160}
+          strokeWidth={12}
           labelText="Live score"
         />
       </View>
@@ -92,7 +92,7 @@ export default function DriveScreen() {
         title="End drive"
         onPress={() => setDriveState("summary")}
         variant="danger"
-        icon={<Ionicons name="stop" size={14} color={theme.colors.danger} />}
+        icon={<Ionicons name="stop" size={18} color={theme.colors.danger} />}
         style={styles.actionBtn}
       />
     </View>
@@ -104,8 +104,8 @@ export default function DriveScreen() {
       <View style={styles.chartWrapper}>
         <CircularProgress
           score={85}
-          size={130}
-          strokeWidth={10}
+          size={160}
+          strokeWidth={12}
           labelText="Final score"
           ratingText="Good driver"
         />
@@ -197,7 +197,7 @@ export default function DriveScreen() {
             pressed && { opacity: 0.7 },
           ]}
         >
-          <Ionicons name="arrow-back" size={16} color={theme.colors.textSecondary} />
+          <Ionicons name="arrow-back" size={20} color={theme.colors.textSecondary} />
         </Pressable>
         <Text style={styles.navTitle}>
           {driveState === "pre"
@@ -214,7 +214,7 @@ export default function DriveScreen() {
         >
           <Ionicons
             name={driveState === "summary" ? "share-outline" : "settings-outline"}
-            size={16}
+            size={20}
             color={theme.colors.textSecondary}
           />
         </Pressable>
@@ -237,46 +237,47 @@ const styles = StyleSheet.create({
   switcherContainer: {
     flexDirection: "row",
     backgroundColor: theme.colors.card,
-    borderRadius: theme.roundness.md,
+    borderRadius: theme.roundness.lg,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    marginHorizontal: 16,
-    marginTop: 8,
-    padding: 2,
+    marginHorizontal: 20,
+    marginTop: 10,
+    padding: 3,
   },
   switcherTab: {
     flex: 1,
-    paddingVertical: 6,
-    borderRadius: theme.roundness.sm,
+    paddingVertical: 10,
+    borderRadius: theme.roundness.md,
     alignItems: "center",
   },
   switcherTabSelected: {
     backgroundColor: theme.colors.primaryLight,
   },
   switcherText: {
-    fontSize: 9,
+    fontSize: 13,
     fontWeight: "500",
     color: theme.colors.textSecondary,
   },
   switcherTextSelected: {
     color: theme.colors.primary,
+    fontWeight: "600",
   },
   navHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
   },
   navTitle: {
-    fontSize: 15,
-    fontWeight: "500",
+    fontSize: 20,
+    fontWeight: "600",
     color: theme.colors.text,
   },
   navIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     backgroundColor: theme.colors.card,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
@@ -284,43 +285,43 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scrollContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 24,
+    paddingHorizontal: 20,
+    paddingBottom: 32,
   },
   stateContainer: {
-    gap: 16,
+    gap: 20,
   },
   welcomeCard: {
     backgroundColor: theme.colors.card,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
     borderRadius: theme.roundness.xl,
-    padding: 24,
+    padding: 32,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,
     marginBottom: 40,
   },
   welcomeIconWrapper: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 96,
+    height: 96,
+    borderRadius: 48,
     backgroundColor: theme.colors.primaryLight,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 20,
   },
   welcomeTitle: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: "700",
     color: theme.colors.text,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   welcomeSubtitle: {
-    fontSize: 11,
+    fontSize: 14,
     color: theme.colors.textSecondary,
     textAlign: "center",
-    lineHeight: 16,
+    lineHeight: 20,
   },
   liveIndicatorContainer: {
     alignItems: "center",
@@ -332,58 +333,58 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.successBorder,
     borderWidth: 0.5,
     borderRadius: theme.roundness.xxl,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    gap: 8,
   },
   liveDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     backgroundColor: theme.colors.success,
   },
   liveText: {
-    fontSize: 11,
+    fontSize: 14,
     color: theme.colors.success,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   chartWrapper: {
     alignItems: "center",
-    marginVertical: 4,
+    marginVertical: 8,
   },
   statsGrid: {
     flexDirection: "row",
-    gap: 8,
+    gap: 10,
   },
   section: {
-    gap: 6,
+    gap: 8,
   },
   sectionHeader: {
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: "600",
     color: theme.colors.textSecondary,
     textTransform: "uppercase",
-    letterSpacing: 0.5,
-    marginBottom: 4,
+    letterSpacing: 0.8,
+    marginBottom: 6,
   },
   aiCard: {
     backgroundColor: theme.colors.card,
-    borderRadius: theme.roundness.md,
+    borderRadius: theme.roundness.lg,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    padding: 12,
-    marginTop: 6,
+    padding: 16,
+    marginTop: 4,
   },
   aiHeader: {
-    fontSize: 11,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginBottom: 6,
-    fontWeight: "500",
+    marginBottom: 8,
+    fontWeight: "600",
   },
   aiBody: {
-    fontSize: 12,
+    fontSize: 15,
     color: theme.colors.text,
-    lineHeight: 18,
+    lineHeight: 22,
   },
   actionBtn: {
     marginTop: 8,

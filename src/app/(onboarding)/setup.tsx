@@ -1,18 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TextInput,
   Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { theme } from "../../constants/theme";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import { CircularProgress } from "../../components/CircularProgress";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { theme } from "../../constants/theme";
 
 export default function SetupScreen() {
   const router = useRouter();
@@ -182,32 +182,32 @@ const styles = StyleSheet.create({
   },
   topSection: {
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: 32,
   },
   overline: {
-    fontSize: 10,
+    fontSize: 11,
     color: theme.colors.primary,
     fontWeight: "600",
     letterSpacing: 1,
-    marginBottom: 6,
+    marginBottom: 8,
   },
   title: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: "600",
     color: theme.colors.text,
     textAlign: "center",
-    lineHeight: 24,
+    lineHeight: 32,
   },
   form: {
-    gap: 12,
+    gap: 16,
   },
   rowContainer: {
-    marginBottom: 6,
+    marginBottom: 8,
   },
   label: {
-    fontSize: 10,
+    fontSize: 12,
     color: theme.colors.textSecondary,
-    marginBottom: 4,
+    marginBottom: 6,
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
@@ -218,23 +218,23 @@ const styles = StyleSheet.create({
     borderRadius: theme.roundness.sm,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    paddingHorizontal: 10,
-    height: 36,
+    paddingHorizontal: 14,
+    height: 44,
   },
   textInput: {
     flex: 1,
     color: theme.colors.text,
-    fontSize: 12,
+    fontSize: 14,
   },
   chipRow: {
     flexDirection: "row",
-    gap: 6,
+    gap: 8,
     flexWrap: "wrap",
-    marginTop: 4,
+    marginTop: 6,
   },
   chip: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     borderRadius: theme.roundness.xxl,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primaryBorder,
   },
   chipText: {
-    fontSize: 10,
+    fontSize: 12,
     color: theme.colors.textSecondary,
     fontWeight: "500",
   },
@@ -257,23 +257,23 @@ const styles = StyleSheet.create({
     borderRadius: theme.roundness.md,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    padding: 10,
+    padding: 16,
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 16,
   },
   scorePreviewText: {
-    marginLeft: 10,
+    marginLeft: 14,
   },
   scorePreviewTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "500",
     color: theme.colors.text,
   },
   scorePreviewSubtitle: {
-    fontSize: 10,
+    fontSize: 12,
     color: theme.colors.textSecondary,
-    marginTop: 2,
+    marginTop: 3,
   },
   footer: {
     paddingHorizontal: 24,

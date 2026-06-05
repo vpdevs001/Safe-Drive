@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
-import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { theme } from "../../constants/theme";
-import { Button } from "../../components/Button";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "../../components/Button";
+import { theme } from "../../constants/theme";
 
 export default function PermissionsScreen() {
   const router = useRouter();
@@ -33,32 +33,69 @@ export default function PermissionsScreen() {
         <View style={styles.cardsContainer}>
           {/* Card 1: Motion Sensors */}
           <View style={styles.card}>
-            <View style={[styles.iconWrapper, { backgroundColor: theme.colors.primaryLight }]}>
-              <Ionicons name="hardware-chip-outline" size={14} color={theme.colors.primary} />
+            <View
+              style={[
+                styles.iconWrapper,
+                { backgroundColor: theme.colors.primaryLight },
+              ]}
+            >
+              <Ionicons
+                name="hardware-chip-outline"
+                size={20}
+                color={theme.colors.primary}
+              />
             </View>
             <View style={styles.cardInfo}>
               <Text style={styles.cardTitle}>Motion sensors</Text>
               <Text style={styles.cardSubtitle}>Accelerometer, gyroscope</Text>
             </View>
-            <Ionicons name="checkmark-circle" size={18} color={theme.colors.success} style={styles.checkIcon} />
+            <Ionicons
+              name="checkmark-circle"
+              size={18}
+              color={theme.colors.success}
+              style={styles.checkIcon}
+            />
           </View>
 
           {/* Card 2: Location */}
           <View style={styles.card}>
-            <View style={[styles.iconWrapper, { backgroundColor: theme.colors.successLight }]}>
-              <Ionicons name="map-outline" size={14} color={theme.colors.success} />
+            <View
+              style={[
+                styles.iconWrapper,
+                { backgroundColor: theme.colors.successLight },
+              ]}
+            >
+              <Ionicons
+                name="map-outline"
+                size={20}
+                color={theme.colors.success}
+              />
             </View>
             <View style={styles.cardInfo}>
               <Text style={styles.cardTitle}>Location</Text>
               <Text style={styles.cardSubtitle}>Route mapping (optional)</Text>
             </View>
-            <Ionicons name="checkmark-circle" size={18} color={theme.colors.success} style={styles.checkIcon} />
+            <Ionicons
+              name="checkmark-circle"
+              size={18}
+              color={theme.colors.success}
+              style={styles.checkIcon}
+            />
           </View>
 
           {/* Card 3: Notifications */}
           <View style={styles.card}>
-            <View style={[styles.iconWrapper, { backgroundColor: theme.colors.warningLight }]}>
-              <Ionicons name="notifications-outline" size={14} color={theme.colors.warning} />
+            <View
+              style={[
+                styles.iconWrapper,
+                { backgroundColor: theme.colors.warningLight },
+              ]}
+            >
+              <Ionicons
+                name="notifications-outline"
+                size={20}
+                color={theme.colors.warning}
+              />
             </View>
             <View style={styles.cardInfo}>
               <Text style={styles.cardTitle}>Notifications</Text>
@@ -134,52 +171,52 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   title: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: "600",
     color: theme.colors.text,
     textAlign: "center",
-    marginBottom: 4,
+    marginBottom: 8,
   },
   description: {
-    fontSize: 11,
+    fontSize: 14,
     color: theme.colors.textSecondary,
     textAlign: "center",
-    lineHeight: 16,
+    lineHeight: 20,
     paddingHorizontal: 12,
   },
   cardsContainer: {
-    gap: 8,
+    gap: 12,
   },
   card: {
     backgroundColor: theme.colors.card,
     borderRadius: theme.roundness.md,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
   },
   iconWrapper: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     borderRadius: theme.roundness.sm,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: 14,
   },
   cardInfo: {
     flex: 1,
   },
   cardTitle: {
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: "500",
     color: theme.colors.text,
   },
   cardSubtitle: {
-    fontSize: 10,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginTop: 2,
+    marginTop: 3,
   },
   checkIcon: {
     marginLeft: "auto",

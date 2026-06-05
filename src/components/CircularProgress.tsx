@@ -17,8 +17,8 @@ interface CircularProgressProps {
 
 export const CircularProgress: React.FC<CircularProgressProps> = ({
   score,
-  size = 130,
-  strokeWidth = 10,
+  size = 160,
+  strokeWidth = 12,
   showLabel = true,
   labelText = "Live score",
   ratingText,
@@ -29,6 +29,12 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (score / 100) * circumference;
+
+  // Scale font size based on the container size so text never overflows
+  const scoreFontSize = Math.max(12, size * 0.25);
+  const labelFontSize = Math.max(8, size * 0.085);
+  const ratingFontSize = Math.max(8, size * 0.075);
+  const badgePaddingH = Math.max(6, size * 0.06);
 
   // Determine colors based on score if not explicitly passed
   let progressColor = theme.colors.success;
@@ -79,8 +85,12 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
       </Svg>
 
       <View style={styles.content}>
-        <Text style={styles.scoreText}>{score}</Text>
-        {showLabel && <Text style={styles.labelText}>{labelText}</Text>}
+        <Text style={[styles.scoreText, { fontSize: scoreFontSize }]}>{score}</Text>
+        {showLabel && (
+          <Text style={[styles.labelText, { fontSize: labelFontSize }]}>
+            {labelText}
+          </Text>
+        )}
         {rating && (
           <View
             style={[
@@ -88,10 +98,11 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
               {
                 backgroundColor: bgRatingColor,
                 borderColor: borderRatingColor,
+                paddingHorizontal: badgePaddingH,
               },
             ]}
           >
-            <Text style={[styles.ratingText, { color: textRatingColor }]}>
+            <Text style={[styles.ratingText, { color: textRatingColor, fontSize: ratingFontSize }]}>
               {rating}
             </Text>
           </View>
@@ -113,12 +124,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scoreText: {
-    fontSize: 32,
-    fontWeight: "600",
+    fontWeight: "700",
     color: theme.colors.text,
   },
   labelText: {
-    fontSize: 10,
     color: theme.colors.textSecondary,
     marginTop: 2,
     letterSpacing: 0.5,
@@ -127,12 +136,10 @@ const styles = StyleSheet.create({
   ratingBadge: {
     borderWidth: 0.5,
     borderRadius: theme.roundness.xxl,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    marginTop: 4,
+    paddingVertical: 3,
+    marginTop: 5,
   },
   ratingText: {
-    fontSize: 9,
     fontWeight: "600",
   },
 });

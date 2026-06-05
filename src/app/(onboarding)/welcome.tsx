@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { theme } from "../../constants/theme";
-import { Button } from "../../components/Button";
+import { useRouter } from "expo-router";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "../../components/Button";
+import { theme } from "../../constants/theme";
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -28,15 +28,16 @@ export default function WelcomeScreen() {
         <View style={styles.logoContainer}>
           <MaterialCommunityIcons
             name="steering"
-            size={36}
+            size={48}
             color={theme.colors.primary}
           />
         </View>
 
         <Text style={styles.title}>Drive smarter,{"\n"}stay safer</Text>
-        
+
         <Text style={styles.description}>
-          Track your driving habits in real time and get a safety score after every trip.
+          Track your driving habits in real time and get a safety score after
+          every trip.
         </Text>
       </View>
 
@@ -91,29 +92,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   logoContainer: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
+    width: 80,
+    height: 80,
+    borderRadius: 24,
     backgroundColor: theme.colors.primaryLight,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 28,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "600",
     color: theme.colors.text,
     textAlign: "center",
-    lineHeight: 32,
-    marginBottom: 10,
+    lineHeight: 36,
+    marginBottom: 12,
   },
   description: {
-    fontSize: 12,
+    fontSize: 15,
     color: theme.colors.textSecondary,
     textAlign: "center",
-    lineHeight: 18,
+    lineHeight: 22,
     paddingHorizontal: 12,
-    marginBottom: 20,
+    marginBottom: 24,
   },
   footer: {
     paddingHorizontal: 24,

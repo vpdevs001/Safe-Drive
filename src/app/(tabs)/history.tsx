@@ -66,7 +66,7 @@ export default function HistoryScreen() {
             pressed && { opacity: 0.7 },
           ]}
         >
-          <Ionicons name="calendar-outline" size={15} color={theme.colors.textSecondary} />
+          <Ionicons name="calendar-outline" size={20} color={theme.colors.textSecondary} />
         </Pressable>
       </View>
 
@@ -140,18 +140,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
   },
   navTitle: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 20,
+    fontWeight: "600",
     color: theme.colors.text,
   },
   navIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: theme.colors.card,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
@@ -159,24 +159,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scrollContent: {
-    paddingBottom: 24,
+    paddingBottom: 32,
   },
   summaryRow: {
     flexDirection: "row",
-    gap: 6,
-    paddingHorizontal: 12,
-    marginBottom: 12,
+    gap: 10,
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
   filterContainer: {
-    marginBottom: 12,
+    marginBottom: 16,
   },
   filterRow: {
-    paddingHorizontal: 12,
-    gap: 5,
+    paddingHorizontal: 16,
+    gap: 8,
   },
   filterChip: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: theme.roundness.xxl,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
@@ -187,14 +187,15 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primaryBorder,
   },
   filterChipText: {
-    fontSize: 10,
+    fontSize: 14,
     color: theme.colors.textSecondary,
+    fontWeight: "500",
   },
   filterChipTextSelected: {
     color: theme.colors.primary,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   listSection: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
   },
 });

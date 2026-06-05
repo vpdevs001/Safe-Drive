@@ -104,7 +104,7 @@ export const Button: React.FC<ButtonProps> = ({
             style={[
               styles.text,
               { color: getTextColor() },
-              icon ? { marginLeft: 6 } : {},
+              icon ? { marginLeft: 8 } : {},
               textStyle,
             ]}
           >
@@ -118,15 +118,15 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: theme.roundness.md,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: theme.roundness.lg,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "600",
   },
   disabled: {

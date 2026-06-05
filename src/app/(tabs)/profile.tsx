@@ -27,7 +27,7 @@ export default function ProfileScreen() {
             pressed && { opacity: 0.7 },
           ]}
         >
-          <Ionicons name="settings-outline" size={15} color={theme.colors.textSecondary} />
+          <Ionicons name="settings-outline" size={20} color={theme.colors.textSecondary} />
         </Pressable>
       </View>
 
@@ -42,7 +42,7 @@ export default function ProfileScreen() {
 
           {/* Streak Badge */}
           <View style={styles.streakBadge}>
-            <Ionicons name="ribbon-outline" size={12} color={theme.colors.success} />
+            <Ionicons name="ribbon-outline" size={16} color={theme.colors.success} />
             <Text style={styles.streakText}>Safe driver streak: 5 drives</Text>
           </View>
         </View>
@@ -114,18 +114,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
   },
   navTitle: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 20,
+    fontWeight: "600",
     color: theme.colors.text,
   },
   navIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: theme.colors.card,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
@@ -133,37 +133,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scrollContent: {
-    paddingBottom: 24,
+    paddingBottom: 32,
   },
   profileHeader: {
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: 16,
   },
   avatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     backgroundColor: theme.colors.primaryLight,
-    borderWidth: 2,
+    borderWidth: 2.5,
     borderColor: "#185fa5",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 12,
   },
   avatarText: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 24,
+    fontWeight: "700",
     color: theme.colors.primary,
   },
   userName: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 20,
+    fontWeight: "600",
     color: theme.colors.text,
   },
   userSubtitle: {
-    fontSize: 10,
+    fontSize: 14,
     color: theme.colors.textSecondary,
-    marginTop: 2,
+    marginTop: 4,
   },
   streakBadge: {
     flexDirection: "row",
@@ -172,42 +172,42 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: theme.colors.successBorder,
     borderRadius: theme.roundness.xxl,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    marginTop: 8,
-    gap: 5,
-  },
-  streakText: {
-    fontSize: 10,
-    color: theme.colors.success,
-    fontWeight: "500",
-  },
-  statsGrid: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
     marginTop: 12,
     gap: 6,
   },
+  streakText: {
+    fontSize: 13,
+    color: theme.colors.success,
+    fontWeight: "600",
+  },
+  statsGrid: {
+    paddingHorizontal: 16,
+    marginTop: 16,
+    gap: 10,
+  },
   statsRow: {
     flexDirection: "row",
-    gap: 6,
+    gap: 10,
   },
   settingsSection: {
-    marginTop: 16,
-    paddingHorizontal: 12,
+    marginTop: 24,
+    paddingHorizontal: 16,
   },
   settingsHeader: {
-    fontSize: 10,
+    fontSize: 13,
     color: theme.colors.textSecondary,
     fontWeight: "600",
     textTransform: "uppercase",
-    letterSpacing: 0.5,
-    marginBottom: 8,
+    letterSpacing: 0.8,
+    marginBottom: 10,
   },
   settingsCard: {
     backgroundColor: theme.colors.card,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    borderRadius: theme.roundness.md,
+    borderRadius: theme.roundness.lg,
     overflow: "hidden",
   },
 });

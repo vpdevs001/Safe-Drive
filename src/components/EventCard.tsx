@@ -54,7 +54,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   return (
     <View style={styles.container}>
       <View style={[styles.iconWrapper, { backgroundColor: styleConfig.bg }]}>
-        <Ionicons name={styleConfig.iconName} size={15} color={styleConfig.color} />
+        <Ionicons name={styleConfig.iconName} size={20} color={styleConfig.color} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
@@ -79,43 +79,43 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: theme.colors.card,
-    borderRadius: theme.roundness.md,
+    borderRadius: theme.roundness.lg,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    padding: 10,
-    marginBottom: 6,
+    padding: 14,
+    marginBottom: 10,
   },
   iconWrapper: {
-    width: 30,
-    height: 30,
-    borderRadius: theme.roundness.sm,
+    width: 40,
+    height: 40,
+    borderRadius: theme.roundness.md,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: 14,
   },
   textContainer: {
     flex: 1,
   },
   title: {
-    fontSize: 13,
-    fontWeight: "500",
+    fontSize: 15,
+    fontWeight: "600",
     color: theme.colors.text,
   },
   subtitle: {
-    fontSize: 11,
+    fontSize: 13,
     color: theme.colors.textSecondary,
-    marginTop: 1,
+    marginTop: 2,
   },
   rightContainer: {
     alignItems: "flex-end",
   },
   count: {
-    fontSize: 13,
-    fontWeight: "500",
+    fontSize: 15,
+    fontWeight: "600",
   },
   deduct: {
-    fontSize: 10,
+    fontSize: 12,
     color: theme.colors.textSecondary,
-    marginTop: 1,
+    marginTop: 2,
   },
 });

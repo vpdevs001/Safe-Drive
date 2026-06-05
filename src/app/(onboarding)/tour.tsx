@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { theme } from "../../constants/theme";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import { EventCard } from "../../components/EventCard";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { theme } from "../../constants/theme";
 
 export default function TourScreen() {
   const router = useRouter();
@@ -23,7 +23,9 @@ export default function TourScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.topSection}>
           <Text style={styles.overline}>WHAT WE DETECT</Text>
-          <Text style={styles.title}>Your phone already knows{"\n"}how you drive</Text>
+          <Text style={styles.title}>
+            Your phone already knows{"\n"}how you drive
+          </Text>
         </View>
 
         <View style={styles.featuresList}>
@@ -106,14 +108,14 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   title: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: "600",
     color: theme.colors.text,
     textAlign: "center",
-    lineHeight: 24,
+    lineHeight: 32,
   },
   featuresList: {
-    gap: 2,
+    gap: 10,
   },
   footer: {
     paddingHorizontal: 24,

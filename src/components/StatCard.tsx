@@ -24,23 +24,23 @@ export const StatCard: React.FC<StatCardProps> = ({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.colors.card,
-    borderRadius: theme.roundness.md,
+    borderRadius: theme.roundness.lg,
     borderWidth: 0.5,
     borderColor: theme.colors.border,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
+    paddingVertical: 16,
+    paddingHorizontal: 14,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
   value: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 22,
+    fontWeight: "700",
   },
   label: {
     fontSize: 13,
     color: theme.colors.textSecondary,
-    marginTop: 3,
+    marginTop: 4,
     textAlign: "center",
   },
 });
