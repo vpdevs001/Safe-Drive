@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  Pressable,
-  Text,
-  StyleSheet,
   ActivityIndicator,
-  ViewStyle,
+  Pressable,
+  StyleSheet,
+  Text,
   TextStyle,
+  ViewStyle,
 } from "react-native";
 import { theme } from "../constants/theme";
 
@@ -118,15 +118,15 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
+    paddingVertical: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.xl,
     borderRadius: theme.roundness.lg,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
   text: {
-    fontSize: 16,
+    fontSize: theme.fontSizes.md,
     fontWeight: "600",
   },
   disabled: {

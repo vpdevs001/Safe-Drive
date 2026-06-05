@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { theme } from "../../constants/theme";
+import React, { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import { CircularProgress } from "../../components/CircularProgress";
-import { StatCard } from "../../components/StatCard";
 import { EventCard } from "../../components/EventCard";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SectionHeader } from "../../components/SectionHeader";
+import { StatCard } from "../../components/StatCard";
+import { theme } from "../../constants/theme";
 
 type DriveState = "pre" | "active" | "summary";
 
@@ -27,7 +22,8 @@ export default function DriveScreen() {
         </View>
         <Text style={styles.welcomeTitle}>Ready to start your trip?</Text>
         <Text style={styles.welcomeSubtitle}>
-          Drive safely, maintain speed limits, and avoid sudden braking to score 100.
+          Drive safely, maintain speed limits, and avoid sudden braking to score
+          100.
         </Text>
       </View>
 
@@ -65,12 +61,16 @@ export default function DriveScreen() {
       <View style={styles.statsGrid}>
         <StatCard value="12:34" label="Duration" />
         <StatCard value={7} label="Events" valueColor={theme.colors.danger} />
-        <StatCard value="-24" label="Deducted" valueColor={theme.colors.warning} />
+        <StatCard
+          value="-24"
+          label="Deducted"
+          valueColor={theme.colors.warning}
+        />
       </View>
 
       {/* Event log */}
       <View style={styles.section}>
-        <Text style={styles.sectionHeader}>Live events</Text>
+        <SectionHeader title="Live events" />
         <EventCard
           type="brake"
           title="Harsh brake"
@@ -81,11 +81,7 @@ export default function DriveScreen() {
           title="Hard accel."
           subtitle="2 events · -10 pts"
         />
-        <EventCard
-          type="turn"
-          title="Sharp turn"
-          subtitle="1 event · -3 pts"
-        />
+        <EventCard type="turn" title="Sharp turn" subtitle="1 event · -3 pts" />
       </View>
 
       <Button
@@ -115,12 +111,16 @@ export default function DriveScreen() {
       <View style={styles.statsGrid}>
         <StatCard value="24:10" label="Duration" />
         <StatCard value={3} label="Events" valueColor={theme.colors.warning} />
-        <StatCard value="-15" label="Deducted" valueColor={theme.colors.danger} />
+        <StatCard
+          value="-15"
+          label="Deducted"
+          valueColor={theme.colors.danger}
+        />
       </View>
 
       {/* Breakdown and AI Feedback */}
       <View style={styles.section}>
-        <Text style={styles.sectionHeader}>Event breakdown</Text>
+        <SectionHeader title="Event breakdown" />
         <EventCard
           type="brake"
           title="Harsh brake"
@@ -135,15 +135,6 @@ export default function DriveScreen() {
           countText="×1"
           deductText="-10 pts"
         />
-
-        {/* AI Card */}
-        <View style={styles.aiCard}>
-          <Text style={styles.aiHeader}>AI feedback</Text>
-          <Text style={styles.aiBody}>
-            Good overall drive. Watch for phone usage — even brief checks triple
-            accident risk.
-          </Text>
-        </View>
       </View>
 
       <Button
@@ -192,28 +183,28 @@ export default function DriveScreen() {
       {/* Main Nav Header */}
       <View style={styles.navHeader}>
         <Pressable
-          style={({ pressed }) => [
-            styles.navIcon,
-            pressed && { opacity: 0.7 },
-          ]}
+          style={({ pressed }) => [styles.navIcon, pressed && { opacity: 0.7 }]}
         >
-          <Ionicons name="arrow-back" size={20} color={theme.colors.textSecondary} />
+          <Ionicons
+            name="arrow-back"
+            size={20}
+            color={theme.colors.textSecondary}
+          />
         </Pressable>
         <Text style={styles.navTitle}>
           {driveState === "pre"
             ? "New Drive"
             : driveState === "active"
-            ? "Live Drive"
-            : "Drive Summary"}
+              ? "Live Drive"
+              : "Drive Summary"}
         </Text>
         <Pressable
-          style={({ pressed }) => [
-            styles.navIcon,
-            pressed && { opacity: 0.7 },
-          ]}
+          style={({ pressed }) => [styles.navIcon, pressed && { opacity: 0.7 }]}
         >
           <Ionicons
-            name={driveState === "summary" ? "share-outline" : "settings-outline"}
+            name={
+              driveState === "summary" ? "share-outline" : "settings-outline"
+            }
             size={20}
             color={theme.colors.textSecondary}
           />
@@ -359,34 +350,7 @@ const styles = StyleSheet.create({
   section: {
     gap: 8,
   },
-  sectionHeader: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: theme.colors.textSecondary,
-    textTransform: "uppercase",
-    letterSpacing: 0.8,
-    marginBottom: 6,
-  },
-  aiCard: {
-    backgroundColor: theme.colors.card,
-    borderRadius: theme.roundness.lg,
-    borderWidth: 0.5,
-    borderColor: theme.colors.border,
-    padding: 16,
-    marginTop: 4,
-  },
-  aiHeader: {
-    fontSize: 13,
-    color: theme.colors.textSecondary,
-    marginBottom: 8,
-    fontWeight: "600",
-  },
-  aiBody: {
-    fontSize: 15,
-    color: theme.colors.text,
-    lineHeight: 22,
-  },
   actionBtn: {
-    marginTop: 8,
+    marginTop: theme.spacing.sm,
   },
 });

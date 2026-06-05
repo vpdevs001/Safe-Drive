@@ -1,17 +1,12 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { theme } from "../../constants/theme";
-import { TrendChart } from "../../components/TrendChart";
-import { StatCard } from "../../components/StatCard";
-import { HistoryItem } from "../../components/HistoryItem";
+import React, { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { HistoryItem } from "../../components/HistoryItem";
+import { SectionHeader } from "../../components/SectionHeader";
+import { StatCard } from "../../components/StatCard";
+import { TrendChart } from "../../components/TrendChart";
+import { theme } from "../../constants/theme";
 
 export default function HistoryScreen() {
   const [selectedFilter, setSelectedFilter] = useState("All");
@@ -61,12 +56,13 @@ export default function HistoryScreen() {
       <View style={styles.navHeader}>
         <Text style={styles.navTitle}>Drive history</Text>
         <Pressable
-          style={({ pressed }) => [
-            styles.navIcon,
-            pressed && { opacity: 0.7 },
-          ]}
+          style={({ pressed }) => [styles.navIcon, pressed && { opacity: 0.7 }]}
         >
-          <Ionicons name="calendar-outline" size={20} color={theme.colors.textSecondary} />
+          <Ionicons
+            name="calendar-outline"
+            size={20}
+            color={theme.colors.textSecondary}
+          />
         </Pressable>
       </View>
 
@@ -76,9 +72,17 @@ export default function HistoryScreen() {
 
         {/* Summary grid */}
         <View style={styles.summaryRow}>
-          <StatCard value="87" label="Avg score" valueColor={theme.colors.success} />
+          <StatCard
+            value="87"
+            label="Avg score"
+            valueColor={theme.colors.success}
+          />
           <StatCard value="7" label="Drives" />
-          <StatCard value="12" label="Events" valueColor={theme.colors.danger} />
+          <StatCard
+            value="12"
+            label="Events"
+            valueColor={theme.colors.danger}
+          />
         </View>
 
         {/* Filter chips */}
@@ -116,6 +120,7 @@ export default function HistoryScreen() {
 
         {/* History list */}
         <View style={styles.listSection}>
+          <SectionHeader title="Recent drives" />
           {historyDrives.map((drive, index) => (
             <HistoryItem
               key={index}

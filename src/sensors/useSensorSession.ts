@@ -56,7 +56,7 @@ export const useSensorSession = ({
   const [sessionDurationMs, setSessionDurationMs] = useState(0);
   const previousMotion = useRef<MotionData | null>(null);
   const recentGyroZ = useRef<number[]>([]);
-  const intervalId = useRef<NodeJS.Timeout | null>(null);
+  const intervalId = useRef<ReturnType<typeof setInterval> | null>(null);
   const [currentSensitivity, setCurrentSensitivity] =
     useState<SensitivityLevel>(sensitivity);
 
