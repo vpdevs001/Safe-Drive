@@ -3,16 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   TextInput,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../constants/theme";
 import { Button } from "../../components/Button";
 import { CircularProgress } from "../../components/CircularProgress";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SetupScreen() {
   const router = useRouter();
@@ -64,11 +64,14 @@ export default function SetupScreen() {
               {["New driver", "Experienced", "Professional"].map((exp) => {
                 const isSelected = experience === exp;
                 return (
-                  <TouchableOpacity
+                  <Pressable
                     key={exp}
                     onPress={() => setExperience(exp)}
-                    activeOpacity={0.8}
-                    style={[styles.chip, isSelected && styles.chipSelected]}
+                    style={({ pressed }) => [
+                      styles.chip,
+                      isSelected && styles.chipSelected,
+                      pressed && { opacity: 0.7 },
+                    ]}
                   >
                     <Text
                       style={[
@@ -78,7 +81,7 @@ export default function SetupScreen() {
                     >
                       {exp}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               })}
             </View>
@@ -91,11 +94,14 @@ export default function SetupScreen() {
               {["City", "Highway", "Mixed"].map((drive) => {
                 const isSelected = typicalDrive === drive;
                 return (
-                  <TouchableOpacity
+                  <Pressable
                     key={drive}
                     onPress={() => setTypicalDrive(drive)}
-                    activeOpacity={0.8}
-                    style={[styles.chip, isSelected && styles.chipSelected]}
+                    style={({ pressed }) => [
+                      styles.chip,
+                      isSelected && styles.chipSelected,
+                      pressed && { opacity: 0.7 },
+                    ]}
                   >
                     <Text
                       style={[
@@ -105,7 +111,7 @@ export default function SetupScreen() {
                     >
                       {drive}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               })}
             </View>

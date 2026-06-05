@@ -3,14 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../constants/theme";
 import { StatCard } from "../../components/StatCard";
 import { SettingRow } from "../../components/SettingRow";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
   const [alertsEnabled, setAlertsEnabled] = useState(true);
@@ -21,9 +21,14 @@ export default function ProfileScreen() {
       {/* Navigation Header */}
       <View style={styles.navHeader}>
         <Text style={styles.navTitle}>My profile</Text>
-        <TouchableOpacity style={styles.navIcon}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.navIcon,
+            pressed && { opacity: 0.7 },
+          ]}
+        >
           <Ionicons name="settings-outline" size={15} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>

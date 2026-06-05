@@ -3,15 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../constants/theme";
 import { TrendChart } from "../../components/TrendChart";
 import { StatCard } from "../../components/StatCard";
 import { HistoryItem } from "../../components/HistoryItem";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HistoryScreen() {
   const [selectedFilter, setSelectedFilter] = useState("All");
@@ -60,9 +60,14 @@ export default function HistoryScreen() {
       {/* Navigation Header */}
       <View style={styles.navHeader}>
         <Text style={styles.navTitle}>Drive history</Text>
-        <TouchableOpacity style={styles.navIcon}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.navIcon,
+            pressed && { opacity: 0.7 },
+          ]}
+        >
           <Ionicons name="calendar-outline" size={15} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -86,11 +91,14 @@ export default function HistoryScreen() {
             {filterChips.map((filter) => {
               const isSelected = selectedFilter === filter;
               return (
-                <TouchableOpacity
+                <Pressable
                   key={filter}
                   onPress={() => setSelectedFilter(filter)}
-                  activeOpacity={0.8}
-                  style={[styles.filterChip, isSelected && styles.filterChipSelected]}
+                  style={({ pressed }) => [
+                    styles.filterChip,
+                    isSelected && styles.filterChipSelected,
+                    pressed && { opacity: 0.7 },
+                  ]}
                 >
                   <Text
                     style={[
@@ -100,7 +108,7 @@ export default function HistoryScreen() {
                   >
                     {filter}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               );
             })}
           </ScrollView>

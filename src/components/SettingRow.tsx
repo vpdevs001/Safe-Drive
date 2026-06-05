@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import { theme } from "../constants/theme";
 
 interface SettingRowProps {
@@ -28,14 +28,8 @@ export const SettingRow: React.FC<SettingRowProps> = ({
   onPress,
   isLast = false,
 }) => {
-  const Container: React.ComponentType<any> = onPress ? TouchableOpacity : View;
-
-  return (
-    <Container
-      activeOpacity={0.8}
-      onPress={onPress}
-      style={[styles.row, !isLast && styles.borderBottom]}
-    >
+  const renderContent = () => (
+    <>
       <View style={[styles.iconContainer, { backgroundColor: iconBg }]}>
         <Ionicons name={iconName} size={13} color={iconColor} />
       </View>
@@ -45,16 +39,16 @@ export const SettingRow: React.FC<SettingRowProps> = ({
       </View>
 
       {hasToggle ? (
-        <TouchableOpacity
-          activeOpacity={0.8}
+        <Pressable
           onPress={onToggle}
-          style={[
+          style={({ pressed }) => [
             styles.toggleContainer,
             toggleValue ? styles.toggleOn : styles.toggleOff,
+            pressed && { opacity: 0.7 },
           ]}
         >
           <View style={styles.toggleKnob} />
-        </TouchableOpacity>
+        </Pressable>
       ) : (
         onPress && (
           <Ionicons
@@ -65,7 +59,28 @@ export const SettingRow: React.FC<SettingRowProps> = ({
           />
         )
       )}
-    </Container>
+    </>
+  );
+
+  if (onPress) {
+    return (
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [
+          styles.row,
+          !isLast && styles.borderBottom,
+          pressed && { opacity: 0.7 },
+        ]}
+      >
+        {renderContent()}
+      </Pressable>
+    );
+  }
+
+  return (
+    <View style={[styles.row, !isLast && styles.borderBottom]}>
+      {renderContent()}
+    </View>
   );
 };
 

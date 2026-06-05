@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  TouchableOpacity,
+  Pressable,
   Text,
   StyleSheet,
   ActivityIndicator,
@@ -84,14 +84,14 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
       disabled={disabled || loading}
-      activeOpacity={0.8}
-      style={[
+      style={({ pressed }) => [
         styles.button,
         getButtonStyles(),
         disabled && styles.disabled,
+        pressed && !disabled && { opacity: 0.7 },
         style,
       ]}
     >
@@ -112,7 +112,7 @@ export const Button: React.FC<ButtonProps> = ({
           </Text>
         </>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

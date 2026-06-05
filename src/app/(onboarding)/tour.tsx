@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { theme } from "../../constants/theme";
 import { Button } from "../../components/Button";
 import { EventCard } from "../../components/EventCard";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TourScreen() {
   const router = useRouter();

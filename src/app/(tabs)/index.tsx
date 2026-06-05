@@ -3,9 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   ScrollView,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../constants/theme";
@@ -13,6 +12,7 @@ import { Button } from "../../components/Button";
 import { CircularProgress } from "../../components/CircularProgress";
 import { StatCard } from "../../components/StatCard";
 import { EventCard } from "../../components/EventCard";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type DriveState = "pre" | "active" | "summary";
 
@@ -167,12 +167,13 @@ export default function DriveScreen() {
             summary: "Summary",
           };
           return (
-            <TouchableOpacity
+            <Pressable
               key={state}
               onPress={() => setDriveState(state)}
-              style={[
+              style={({ pressed }) => [
                 styles.switcherTab,
                 isSelected && styles.switcherTabSelected,
+                pressed && { opacity: 0.7 },
               ]}
             >
               <Text
@@ -183,16 +184,21 @@ export default function DriveScreen() {
               >
                 {labels[state]}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>
 
       {/* Main Nav Header */}
       <View style={styles.navHeader}>
-        <TouchableOpacity style={styles.navIcon}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.navIcon,
+            pressed && { opacity: 0.7 },
+          ]}
+        >
           <Ionicons name="arrow-back" size={16} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
+        </Pressable>
         <Text style={styles.navTitle}>
           {driveState === "pre"
             ? "New Drive"
@@ -200,13 +206,18 @@ export default function DriveScreen() {
             ? "Live Drive"
             : "Drive Summary"}
         </Text>
-        <TouchableOpacity style={styles.navIcon}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.navIcon,
+            pressed && { opacity: 0.7 },
+          ]}
+        >
           <Ionicons
             name={driveState === "summary" ? "share-outline" : "settings-outline"}
             size={16}
             color={theme.colors.textSecondary}
           />
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>

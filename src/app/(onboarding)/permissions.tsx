@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../constants/theme";
 import { Button } from "../../components/Button";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PermissionsScreen() {
   const router = useRouter();
@@ -63,16 +64,16 @@ export default function PermissionsScreen() {
               <Text style={styles.cardTitle}>Notifications</Text>
               <Text style={styles.cardSubtitle}>Drive start reminders</Text>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.8}
+            <Pressable
               onPress={() => setNotificationsEnabled(!notificationsEnabled)}
-              style={[
+              style={({ pressed }) => [
                 styles.toggleContainer,
                 notificationsEnabled ? styles.toggleOn : styles.toggleOff,
+                pressed && { opacity: 0.7 },
               ]}
             >
               <View style={styles.toggleKnob} />
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </ScrollView>
